@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./CSS/Styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnBoarding</title>
+</head>
+<body class="Body">
+    <h1> Welcome! </h1>
+    <span>
+        <i>
+            <strong id="login" onclick="Click()">Go To Login Page</strong>
+        </i>
+    </span>
+    <span>
+        <i>
+            <strong id="login" onclick="Click2()">Go To Sign-Up Page</strong>
+        </i>
+    </span>
+    <h3 onclick="Click3()">Reset Password Page</h3>
+</body>
+<script>
+    // let Route = document.querySelector('#login')
+    const Click = () => {
+        window.location.href = "./HTML/Login-Page.html"
+    }
+    const Click2 = () => {
+        window.location.href = "./HTML/Sign-Up.html"
+    }
+    const Click3 = () => {
+        window.location.href = "./HTML/ResetPass.html"
+    }
+</script>
+</html>

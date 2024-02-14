@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../CSS/Sign-Up.css" />
+    <script src="../JS/Sign-Up.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <style>
+    /* * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    } */
+
+    body {
+      width: 97%;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: max-content;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      width: 40%;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.26);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border-radius: 7px;
+      outline: none;
+      border: 1px solid gray;
+      transition: border-color 0.9s ease-in-out;
+    }
+
+    input:focus {
+      border: 1px solid #00adf1;
+    }
+
+    button {
+      background-color: #00adf1;
+      color: #fff;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      color: white;
+      font-size: 18px;
+    }
+
+    button:hover {
+      background-color: #19b9f8;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #modalMessage {
+      color: red;
+    }
+
+    p a {
+      color: #00adf1;
+      text-decoration: none;
+    }
+
+    p a:hover {
+      color: #19b9f8;
+    }
+
+    #showPasswordBtn {
+      cursor: pointer;
+      color: #00adf1;
+      font-size: 14px;
+      text-decoration: underline;
+      padding-bottom: 10%;
+    }
+
+    @media screen and (max-width: 1284px) {
+      /* * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    } */
+
+      body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      form {
+        height: 95vh;
+        width: 80%;
+      padding: 50px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.26);
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border-radius: 7px;
+      outline: none;
+      border: 1px solid gray;
+      transition: border-color 0.9s ease-in-out;
+    }
+    }
+
+    @media screen and (max-width: 768px) {
+      * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+      body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+        padding: 10px;
+      }
+
+      form {
+        width: 75%;
+        height: 90vh;
+        /* background-color: blue; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+
+    @media screen and (max-width: 390px) {
+      body {
+        width: 97%;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: max-content;
+      padding: 10px;
+      }
+
+      form {
+        width: 95%;
+      }
+    }
+  </style>
+
+
+  <body>
+    <h1>Get Started with Equity Bank</h1>
+    <form id="signupForm" onsubmit="validateForm(event)" action="">
+      <label for="fullName">Full Name:</label>
+      <input type="text" id="fullName" name="fullName" />
+
+      <label for="motherMaidenName">Mother's Maiden Name:</label>
+      <input type="text" id="motherMaidenName" name="motherMaidenName" />
+
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" />
+
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" />
+
+      <label for="mobileNumber">Mobile Number:</label>
+      <input type="text" id="mobileNumber" name="mobileNumber" />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" />
+      <span id="showPasswordBtn" onclick="togglePasswordVisibility()"
+        >Show Password</span
+      >
+
+      <label for="zipCode">Zip Code:</label>
+      <input type="text" id="zipCode" name="zipCode" />
+
+      <label for="SocialSecurityNumber">Social Security Number:</label>
+      <input
+        type="text"
+        id="SocialSecurityNumber"
+        name="SocialSecurityNumber"
+      />
+
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="Login-Page.html">Login</a></p>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="modalMessage"></p>
+        <p id="errorDisplay"></p>
+      </div>
+    </div>
+  </body>
+  <script>
+    const togglePasswordVisibility = () => {
+      const passwordInput = document.getElementById("password");
+      const showPasswordBtn = document.getElementById("showPasswordBtn");
+
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        showPasswordBtn.textContent = "Hide Password";
+      } else {
+        passwordInput.type = "password";
+        showPasswordBtn.textContent = "Show Password";
+      }
+    };
+
+    const isValidAddress = (address) => {
+      return address.trim() !== "";
+    };
+
+    const isValidMobileNumber = (mobileNumber) => {
+      const mobileNumberRegex = /^\d{11}$/;
+      return mobileNumberRegex.test(mobileNumber);
+    };
+
+    const isValidSocialSecurityNumber = (socialSecurityNumber) => {
+      const ssnRegex = /^\d{9}$/;
+      return ssnRegex.test(socialSecurityNumber);
+    };
+
+    const validateForm = (event) => {
+      event.preventDefault();
+
+      const signUpButton = document.querySelector('button[type="submit"]');
+      signUpButton.disabled = true;
+      signUpButton.textContent = "Loading...";
+
+      const fullName = document.getElementById("fullName").value;
+      const motherMaidenName =
+        document.getElementById("motherMaidenName").value;
+      const email = document.getElementById("email").value;
+      const address = document.getElementById("address").value;
+      const mobileNumber = document.getElementById("mobileNumber").value;
+      const password = document.getElementById("password").value;
+      const zipCode = document.getElementById("zipCode").value;
+      const SocialSecurityNumber = document.getElementById(
+        "SocialSecurityNumber"
+      ).value;
+
+      const isValidFullName = (fullName) => {
+        const fullNameRegex = /^[a-zA-Z\s]{3,}$/;
+        return fullNameRegex.test(fullName);
+      };
+
+      const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      };
+
+      const isValidPassword = (password) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+        const isPasswordValid = passwordRegex.test(password);
+
+        if (!isPasswordValid) {
+          return {
+            isValid: false,
+            message:
+              "Password requirements: At least one lowercase letter, one uppercase letter, one digit, minimum length of 6 characters",
+          };
+        }
+
+        return {
+          isValid: true,
+          message: "Password is valid",
+        };
+      };
+
+      const isValidZipcode = (zipcode) => {
+        const trimmedZipcode = zipcode.trim();
+        console.log("Zipcode:", trimmedZipcode);
+        const zipcodeRegex = /^\d{5}$/;
+        const isValid = zipcodeRegex.test(trimmedZipcode);
+        console.log("Is Zipcode Valid:", isValid);
+        return isValid;
+      };
+
+      const isValidMotherMaidenName = (motherMaidenName) => {
+        const nameRegex = /^[a-zA-Z\s]{10,}$/;
+        return nameRegex.test(motherMaidenName);
+      };
+
+      const isValidSocialSecurityNumber = (SocialSecurityNumber) => {
+    const ssnRegex = /^\d{9}$/;
+    return ssnRegex.test(SocialSecurityNumber);
+};
+
+      console.log(isValidFullName(fullName));
+      console.log(isValidEmail(email));
+      console.log(isValidPassword(password));
+      console.log(isValidZipcode(zipCode));
+
+      if (!isValidFullName(fullName)) {
+        displayModal("Invalid Full Name. Full Name cannot be empty.", true);
+        resetSignUpButton();
+        return;
+      }
+
+      if (!isValidMotherMaidenName(motherMaidenName)) {
+        displayModal("Invalid Mother's Maiden Name.", true);
+        resetSignUpButton();
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        displayModal(
+          "Invalid Email. Please enter a valid email address.",
+          true
+        );
+        resetSignUpButton();
+        return;
+      }
+
+      if (!isValidAddress(address)) {
+        displayModal("Invalid Address.", true);
+        resetSignUpButton();
+        return;
+      }
+
+      if (!isValidMobileNumber(mobileNumber)) {
+        displayModal("Invalid Mobile Number.", true);
+        resetSignUpButton();
+        return;
+      }
+
+      const passwordValidation = isValidPassword(password);
+      if (!passwordValidation.isValid) {
+        displayModal(`Invalid Password. ${passwordValidation.message}`, true);
+        resetSignUpButton();
+        return;
+      }
+
+      if (!isValidZipcode(zipCode)) {
+        displayModal("Invalid Zip Code. It should be a 5-digit number.", true);
+        resetSignUpButton();
+        return;
+      }
+
+      if (!isValidSocialSecurityNumber(SocialSecurityNumber)) {
+        displayModal(
+          "Invalid Social Security Number. It Should be in the format: 123456789",
+          true
+        );
+        resetSignUpButton();
+        return;
+      }
+
+      if (!fullName || !email || !password || !zipCode) {
+        displayModal("Please fill in all fields.", true);
+        resetSignUpButton();
+        return;
+      }
+
+      const formData = {
+        fullName: fullName,
+        motherMaidenName: motherMaidenName,
+        email: email,
+        address: address,
+        mobileNumber: mobileNumber,
+        password: password,
+        zipCode: zipCode,
+        SocialSecurityNumber: SocialSecurityNumber,
+      };
+
+      axios
+        .post("https://equity-application.onrender.com/Registration", formData)
+        .then((response) => {
+          console.log(response.data);
+          displayModal("Registration successful!");
+          resetFormFields();
+          window.location.href = "./Login-Page.html";
+        })
+
+        .catch((error) => {
+          console.error("Error:", error);
+          displayModal("Registration failed. Please try again.", true);
+          resetFormFields();
+        })
+
+        .finally(() => {
+          resetSignUpButton();
+        });
+    };
+
+    const resetSignUpButton = () => {
+      const signUpButton = document.querySelector('button[type="submit"]');
+      signUpButton.disabled = false;
+      signUpButton.textContent = "Sign Up";
+    };
+
+    const resetFormFields = () => {
+      document.getElementById("fullName").value = "";
+      document.getElementById("motherMaidenName").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("address").value = "";
+      document.getElementById("mobileNumber").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("zipCode").value = "";
+      document.getElementById("SocialSecurityNumber").value = "";
+    };
+
+    const displayModal = (message, isError = false) => {
+      const modal = document.getElementById("myModal");
+      const modalMessage = document.getElementById("modalMessage");
+
+      modal.style.display = "block";
+      modalMessage.textContent = message;
+    };
+
+    const closeModal = () => {
+      const modal = document.getElementById("myModal");
+      modal.style.display = "none";
+    };
+  </script>
+</html>

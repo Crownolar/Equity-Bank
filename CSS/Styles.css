@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* body {
+    width: 100%;
+    height: 100vh;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18%;
+} */
+
+#login{
+    cursor: pointer;
+}
+
+#login:hover{
+    color: #f1c400;
+}
+
+h3 {
+    cursor: pointer;
+}
+
+h3:hover {
+   color: #f1c400; 
+}

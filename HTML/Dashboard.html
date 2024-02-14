@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/4e6ce01e29.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Dashboard</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        width: 100%;
+        height: 100vh;
+      }
+
+      header {
+        width: 100%;
+        height: 15vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .headerWrap {
+        width: 1300px;
+        height: 95%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      }
+
+      .DashboardLogo {
+        width: 150px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+      
+
+      nav {
+        width: 600px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 35px;
+      }
+
+      li {
+        list-style-type: none;
+        cursor: pointer;
+      }
+
+      li:hover {
+        color: #00adf1;
+      }
+
+      .DashboardEmail {
+        width: 220px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .DashboardEmail .icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00adf1;
+        font-size: 20px;
+      }
+
+      .IconImage {
+        width: 5%;
+        height: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: none;
+      }
+
+      .menuIcon {
+        width: 40px;
+        height: 40px;
+      }
+
+      .menuIcon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      section {
+        width: 100%;
+        height: 85vh;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .DashboardSectionInfo {
+        width: 95%;
+        height: 90%;
+        box-shadow: dimgray;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+      }
+
+      .DashboardSectionInfo-headline {
+        display: flex;
+        justify-content: center;
+      }
+
+      .DashboardSectionInfo-headline h2 {
+        color: #00adf1;
+      }
+
+      .UserInfo {
+        width: 80%;
+        height: 120vh;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+          rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .UserInfo span {
+        color: #00adf1;
+      }
+
+      .UserAccountDetails {
+        width: 80%;
+        height: 60%;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .userAccountDetails-sect {
+        width: 98%;
+        height: 29%;
+        background-color: #00adf1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        font-size: 18px;
+        color: #fff;
+      }
+
+      .userAccountDetails-sect .Route {
+        color: rgb(11, 109, 200);
+        font-weight: bold;
+      }
+
+      .userAccountDetails-sect span {
+        color: #fff;
+      }
+
+      .menu1 {
+        display: none;
+      }
+
+      .menu2 {
+        display: none;
+      }
+
+      .userData {
+        width: 79%;
+        height: 30%;
+      }
+
+      .userDataList {
+        width: 100%;
+        height: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+      }
+
+      .userDataListContent {
+        width: 100%;
+        height: 15vh;
+        padding: 10px;
+      }
+      
+      .userDataListContentWrap {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        overflow-y: scroll;
+        flex: 0 0 auto;
+      }
+
+      .userDataListContentWrap::-webkit-scrollbar {
+        width: 0.5em;
+      }
+
+      .userDataListContentWrap::-webkit-scrollbar-thumb {
+        background-color: transparent;
+      }
+
+      .userDataListContentWrap::-webkit-scrollbar-track {
+        background-color: transparent;
+      }
+
+
+      .userDataList .amount {
+        margin-right: 20px;
+      }
+
+      .userDataList .date {
+        margin-right: 47px;
+      }
+
+      .Credit {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 0 0 auto;
+      }
+      
+      .userDataListContentWrap .amountNum {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .DateNum {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 0 0 auto;
+      }
+
+      .recentTr {
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      .loading-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .loading-spinner {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        00% { transform: rotate(360deg); }
+      }
+
+      .logout-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.989);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        gap: 10px;
+      }
+
+      .logout-modal p {
+        font-size: 20px;
+        text-align: center;
+        padding: 20px;
+        background-color: #242424;
+        border-radius: 8px;
+      }
+
+      .logout-modal button {
+        background-color: #3498db;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .logout-modal button:hover {
+        background-color: #1e87d6;
+      }
+
+      .logout-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        gap: 10px;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .logout-modal p {
+        font-size: 20px;
+        text-align: center;
+        padding: 20px;
+        background-color: #242424;
+        border-radius: 8px;
+      }
+
+      .logout-modal button {
+        background-color: #3498db;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .logout-modal button:hover {
+        background-color: #1e87d6;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+.popup-message {
+  width: 100%;
+  height: 100%;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  /* max-width: 400px; */
+  z-index: 1002;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.popup-message p {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.popup-message button {
+  width: 14%;
+  height: 9%;
+  background-color: #3498db;
+  color: #fff;
+  /* padding: 10px 20px; */
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-message button:hover {
+  background-color: #1e87d6;
+}
+
+
+      @media screen and (max-width: 1440px) {
+        .userAccountDetails-sect p {
+          font-size: 15px;
+        }
+      }
+
+
+      @media screen and (max-width: 1284px) {
+
+      .DashboardEmail {
+        display: none;
+      }
+
+        .IconImage {
+          display: flex;
+          width: 9%;
+          height: 30%;
+        }
+
+        header {
+          height: 10vh;
+        }
+
+        .headerWrap {
+          width: 90%;
+          height: 80%;
+          display: flex;
+        }
+
+        section {
+          height: 90vh;
+        }
+
+        .DashboardSectionInfo {
+          width: 95%;
+          height: 90%;
+          display: flex;
+          flex-direction: column;
+          justify-content: baseline;
+        }
+
+        .DashboardSectionInfo-headline {
+          height: 15%;
+          /* width: 100%; */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+          text-align: center;
+        }
+
+
+        .UserInfo {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+        }
+
+        .UserAccountDetails {
+          height: 50%;
+          width: 95%;
+          gap: 6px;
+        }
+
+        .userAccountDetails-sect {
+          font-size: 22px;
+          height: 45%;
+        }
+
+        nav {
+          height: 60%;
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 15vh;
+          right: 0;
+          width: 100%;
+          background-color: #0d0d0de2;
+          z-index: 1;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+          color: #fff;
+          font-size: 25px;
+          gap: 80px;
+        }
+
+        nav.show-nav {
+          display: flex;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        nav {
+          height: 80%;
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 15vh;
+          right: 0;
+          width: 100%;
+          background-color: #0d0d0de2;
+          z-index: 1;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+          color: #fff;
+          font-size: 25px;
+          gap: 80px;
+        }
+
+        .menu1, .menu2 {
+          display: block;
+          font-size: 25px;
+        }
+      }
+
+      @media screen and (max-width: 320px) {
+        nav {
+          font-size: 18px;
+        }
+        
+        .DashboardSectionInfo-headline h2 {
+          font-size: 15px;
+        }
+
+        .UserInfo h3 {
+          text-align: center;
+        }
+
+        .userAccountDetails-sect {
+          font-size: 16px;
+        }
+
+        .menu1 {
+          font-size: 22px;
+        }
+
+        .menu2 {
+          font-size: 22px;
+        }
+
+        .recentTr {
+          font-size: 15px;
+        }
+
+        .userData {
+          width: 95%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="headerWrap">
+        <div class="DashboardLogo">
+          <img src="./equitybank_header_logo.svg" alt="">
+        </div>
+
+        <nav class="show-nav">
+          <li onclick="displayPopup()">Bill Pay</li>
+          <li onclick="displayPopup()">Order Check</li>
+          <li onclick="Transfer()">Transfer</li>
+          <li onclick="displayPopup()">Account Info</li>
+          <li onclick="logOut()">Log Out</li>
+        </nav>
+
+        <div class="DashboardEmail">
+          <div class="icon">
+            <i class="fa-regular fa-envelope"></i>
+          </div>
+          <span>help@equitysymbol.com</span>
+        </div>
+        <div class="IconImage">
+          <div class="menuIcon" onclick="toggleNav()">
+          <img class="menu2a" src="./menu 2a.png" alt="">
+          <img class="menu1a" src="./close 1a.png" alt="">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="DashboardSectionInfo">
+        <div class="DashboardSectionInfo-headline">
+          <h2>Equity Symbol Credit Union Saving...</h2>
+        </div>
+        <div class="UserInfo">
+          <h3>Welcome </h3>
+
+          <div class="UserAccountDetails">
+            <div class="userAccountDetails-sect">
+              <p>Account Number</p>
+              <span>0</span>
+            </div>
+            <div class="userAccountDetails-sect">
+              <p>Routing Number</p>
+              <span class="Route">0</span>
+            </div>
+            <div class="userAccountDetails-sect">
+              <p>Account Balance</p>
+              <span>$0</span>
+            </div>
+          </div>
+
+          <span class="recentTr">Recent Transaction</span>
+
+          <div class="userData">
+            <div class="userDataList">
+              <span>Status</span>
+              <span class="amount">Amount</span>
+              <span class="date">Date</span>
+            </div>
+            
+            <div class="userDataListContent">
+              <div class="userDataListContentWrap">
+                <div class="Credit">
+                  <span></span>
+                </div>
+              <div class="amountNum">
+                <!-- <span></span> -->
+              </div>
+              <div class="DateNum">
+                <span></span>
+              </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+        <div class="loading-modal" id="loadingModal">
+          <div class="loading-spinner"></div>
+            <p>Loading...</p>
+        </div>
+          <div id="logoutModal" class="logout-modal">
+              <p>You are logged out. Please log in to access the dashboard.</p>
+              <button onclick="closeLogoutModal()">Login</button>
+          </div>
+          <div id="logoutModalout" class="logout-modal">
+              <p>User Logged  Out Successfully.</p>
+          </div>
+          <!-- Add this div for the pop-up message -->
+          <div class="popup-message" id="popupMessage">
+            <p>Oops! It looks like something went wrong. We apologize for the inconvenience. If you continue to experience this issue, please don't hesitate to reach out to us for assistance at <a href="mailto:equityonlinepay@amail.com">equityonlinepay@amail.com</a>. Our team will be happy to help you resolve the issue and ensure that you have a smooth experience with our microfinance services. Thank you for your understanding.</p>
+            <button onclick="closePopup()">Close</button>
+          </div>
+
+  </body>
+
+  <script>
+const getUserInfo = () => {
+  const loadingModal = document.getElementById("loadingModal");
+  loadingModal.style.display = "flex";
+  const userID = localStorage.getItem("userID");
+
+  if (!userID) {
+    console.error("userID not found.");
+    return;
+  }
+
+  axios
+    .get(`https://equity-application.onrender.com/getOne/${userID}`)
+    .then((response) => {
+      const userData = response.data.data;
+      console.log("User data:", userData);
+      loadingModal.style.display = "none";
+
+      document.querySelector(".UserInfo h3").textContent = `Welcome ${userData.fullName}`;
+      document.querySelector(".userAccountDetails-sect span").textContent = userData.accountNumber;
+      document.querySelector(".userAccountDetails-sect .Route").textContent = userData.routingNumber;
+      document.querySelector(".userAccountDetails-sect:last-child span").textContent = `$${userData.amount}`;
+
+      const userEmail = userData.email;
+      const userFullName = userData.fullName
+      console.log(userEmail)
+      console.log(userFullName)
+      if (
+            !(userEmail === "stevemalcolm89@gmail.com" && userFullName === "Steve Malcolm") &&
+            !(userEmail === "abbydawn7765@gmail.com" && userFullName === "Abby Dawn Edward")
+          ) {
+            const userInfoH3 = document.querySelector(".UserInfo h3");
+if (userInfoH3) {
+  userInfoH3.textContent = `Welcome ${userData.fullName}`;
+}
+
+const accountNumberSpan = document.querySelector(".userAccountDetails-sect span");
+if (accountNumberSpan) {
+  accountNumberSpan.textContent = userData.accountNumber;
+}
+
+const routeSpan = document.querySelector(".userAccountDetails-sect .Route");
+if (routeSpan) {
+  routeSpan.textContent = userData.routingNumber;
+}
+
+const lastChildSpan = document.querySelector(".userAccountDetails-sect:last-child span");
+if (lastChildSpan) {
+  lastChildSpan.textContent = `$${userData.amount}`;
+}
+
+      }
+
+      const userDataListContentWrap = document.querySelector(".userDataListContentWrap");
+      const amountNumContainer = document.querySelector(".amountNum");
+      const creditDiv = document.querySelector(".Credit");
+      const dateNumDiv = document.querySelector(".DateNum");
+
+  if (
+    (userEmail === "stevemalcolm89@gmail.com" && userFullName === "Steve Malcolm") ||
+    (userEmail === "abbydawn7765@gmail.com" && userFullName === "Abby Dawn Edward")
+    ) {
+      const recentTransactions = [
+        { status: "Credit", amount: 10000000, updatedAt: "08/30/2016" },
+        { status: "Credit", amount: 5000000, updatedAt: "09/15/2018" },
+        { status: "Credit", amount: 15000000, updatedAt: "10/02/2021" },
+      ];
+
+    creditDiv.innerHTML = "";
+    amountNumContainer.innerHTML += "";
+    dateNumDiv.innerHTML = "";
+
+    for (let i = 0; i < recentTransactions.length; i++) {
+        const transaction = recentTransactions[i];
+        const creditSpan = `<span>${transaction.status}</span>`;
+        const amountSpan = `<span>$${transaction.amount.toFixed(2)}</span>`;
+        const dateSpan = `<span>${transaction.updatedAt}</span>`;
+
+        creditDiv.innerHTML += creditSpan;
+        amountNumContainer.innerHTML += amountSpan;
+        dateNumDiv.innerHTML += dateSpan;
+      }
+    } else {
+    creditDiv.innerHTML = "<span></span><span></span><span></span>";
+    amountNumContainer.innerHTML = "<span>No Transaction history</span><span></span><span></span>";
+    dateNumDiv.innerHTML = "<span></span><span></span><span></span>";
+    }
+
+
+      const nav = document.querySelector("nav");
+      nav.classList.remove("show-nav");
+
+      const menuIcon = document.querySelector(".menu2a");
+      const closeIcon = document.querySelector(".menu1a");
+
+      menuIcon.style.display = "block";
+      closeIcon.style.display = "none";
+
+    })
+    .catch((error) => {
+      loadingModal.style.display = "none";
+      console.error("Error fetching user data:", error);
+    });
+  };
+  
+  document.addEventListener("DOMContentLoaded", () => {
+  const userID = localStorage.getItem("userID");
+  if (!userID) {
+    displayLogoutModal();
+  } else {
+    getUserInfo();
+  }
+});
+
+  function logOut() {
+  const userID = localStorage.getItem("userID");
+  localStorage.removeItem("userID");
+    axios
+      .post(`https://equity-application.onrender.com/logout/${userID}`)
+      .then((response) => {
+        console.log(response.data);
+        localStorage.removeItem("userID");
+        displayLogoutModalOut();
+        window.location.href = "../index.html";
+      })
+      .catch((error) => {
+        console.error("An error occurred during logout:", error.response.data);
+      });
+  }
+
+function displayLogoutModalOut() {
+  const logoutModal = document.getElementById("logoutModalout");
+  logoutModal.style.display = "flex";
+  logoutModal.classList.add("fade-in");
+  logoutModal.style.zIndex = "1001";
+  logoutModal.style.display = "flex";
+  logoutModal.classList.add("fade-in");
+}
+
+function closeLogoutModalOut() {
+  const logoutModal = document.getElementById("logoutModalout");
+  logoutModal.style.display = "none";
+  logoutModal.classList.remove("fade-in");
+  window.location.href = "./Login-Page.html";
+}
+
+
+
+  function displayLogoutModal() {
+  const logoutModal = document.getElementById("logoutModal");
+  logoutModal.style.display = "flex";
+
+  setTimeout(() => {
+    displayLogoutModal();
+  }, 10000);
+  }
+
+  function closeLogoutModal() {
+  const logoutModal = document.getElementById("logoutModal");
+  logoutModal.style.display = "none";
+  window.location.href = "./Login-Page.html"
+}
+
+  
+  function toggleNav() {
+  const nav = document.querySelector("nav");
+  nav.classList.toggle("show-nav");
+
+  const menuIcon = document.querySelector(".menu2a");
+  const closeIcon = document.querySelector(".menu1a");
+
+  if (nav.classList.contains("show-nav")) {
+    menuIcon.style.display = "none";
+    closeIcon.style.display = "block";
+  } else {
+    menuIcon.style.display = "block";
+    closeIcon.style.display = "none";
+  }
+
+  console.log("Toggled");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const nav = document.querySelector("nav");
+  nav.classList.remove("show-nav");
+
+  const menuIcon = document.querySelector(".menu2a");
+  const closeIcon = document.querySelector(".menu1a");
+
+  menuIcon.style.display = "block";
+  closeIcon.style.display = "none";
+});
+
+function displayPopup() {
+  const popupMessage = document.getElementById("popupMessage");
+  popupMessage.style.display = "flex";
+}
+
+function closePopup() {
+  const popupMessage = document.getElementById("popupMessage");
+  popupMessage.style.display = "none";
+}
+
+function displayLogoutModal() {
+  displayPopup();
+  setTimeout(() => {
+    closePopup();
+  }, 10000);
+}
+
+const Transfer = () => {
+        window.location.href = "./Transfer.html"
+    }
+
+
+  </script>
+</html>

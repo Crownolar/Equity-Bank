@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #f8f8f8;
+      }
+
+      .transfer-container {
+        max-width: 400px;
+        /* width: 30%; */
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      h2 {
+        color: #00adf1;
+      }
+
+      .sub-heading {
+        color: #777;
+      }
+
+      form {
+        max-width: 400px;
+        margin-top: 20px;
+        /* background-color: red; */
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        display: none;
+      }
+
+      input {
+        width: 92%;
+        padding: 13px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      input:focus {
+        border: 1px solid #00adf1;
+        outline: none;
+      }
+
+      .currency-input {
+        position: relative;
+      }
+
+      .currency-symbol {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        color: #333;
+      }
+
+      button {
+        background-color: #00adf1;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .popup-message {
+        width: 100%;
+        height: 100%;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        /* max-width: 400px; */
+        z-index: 1002;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .popup-message p {
+        width: 30%;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 20px;
+      }
+
+      .popup-message button {
+        width: 20%;
+        height: 9%;
+        background-color: #3498db;
+        color: #fff;
+        /* padding: 10px 20px; */
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .popup-message button:hover {
+        background-color: #1e87d6;
+      }
+
+      .go {
+        padding-top: 20px;
+        color: #00adf1;
+        cursor: pointer;
+      }
+
+      @media screen and (max-width: 1268px) {
+        body {
+          width: 100%;
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+    </style>
+    <title>Fund Transfer</title>
+  </head>
+  <body>
+    <div class="transfer-container">
+      <h2>Fund Transferring</h2>
+      <h2 class="sub-heading">It's safe, easy, and convenient</h2>
+
+      <form>
+        <div class="currency-input">
+          <input type="text" placeholder="Beneficiary Account Number" />
+        </div>
+
+        <div class="currency-input">
+          <input type="text" placeholder="$ Amount to transfer" />
+          <span class="currency-symbol">$</span>
+        </div>
+
+        <input type="text" placeholder="Bank Name" />
+        <input type="text" placeholder="Full Name on Beneficiary Account" />
+        <input type="text" placeholder="Routing Number" />
+        <input type="text" placeholder="Bank Address" />
+
+        <button type="button" onclick="displayPopup()">Proceed</button>
+      </form>
+      <span class="go" onclick="controlBackNav()" >Go back to your dashboard</span>
+    </div>
+
+    <div class="popup-message" id="popupMessage">
+      <p>
+        Oops! It looks like something went wrong. We apologize for the
+        inconvenience. If you continue to experience this issue, please don't
+        hesitate to reach out to us for assistance at
+        <a href="mailto:equityonlinepay@amail.com">equityonlinepay@amail.com</a
+        >. Our team will be happy to help you resolve the issue and ensure that
+        you have a smooth experience with our microfinance services. Thank you
+        for your understanding.
+      </p>
+      <button onclick="closePopup()">Close</button>
+    </div>
+  </body>
+
+  <script>
+    const controlBackNav = () => {
+        window.location.href = "./Dashboard.html"
+    }
+
+    function displayPopup() {
+      const popupMessage = document.getElementById("popupMessage");
+      popupMessage.style.display = "flex";
+    }
+
+    function closePopup() {
+      const popupMessage = document.getElementById("popupMessage");
+      popupMessage.style.display = "none";
+    }
+
+    function displayLogoutModal() {
+      displayPopup();
+      setTimeout(() => {
+        closePopup();
+      }, 10000);
+    }
+  </script>
+</html>
