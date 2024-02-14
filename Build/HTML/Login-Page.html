@@ -22,21 +22,22 @@
       justify-content: center;
       align-items: center;
       height: 90vh;
+      gap: 25pxq;
     }
 
     .Login-Form {
-      background-color: #fff;
+      /* background-color: #fff; */
       padding: 40px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    form label {
+    .Login-Form label {
       display: block;
       margin-bottom: 8px;
     }
 
-    form input {
+    .Login-Form input {
       width: 100%;
       padding: 10px;
       margin-bottom: 16px;
@@ -46,7 +47,7 @@
       border: 1px solid gray;
     }
 
-    form input:focus {
+    .Login-Form input:focus {
       border: 1px solid #00adf1;
     }
 
@@ -58,7 +59,7 @@
       gap: 20%;
     }
 
-    form button {
+    .Login-Form button {
       background-color: #00adf1;
       color: #fff;
       width: 100%;
@@ -70,7 +71,7 @@
       margin-top: 20px;
     }
 
-    form button:hover {
+    .Login-Form button:hover {
       background-color: #19b9f8;
     }
 
@@ -136,62 +137,65 @@
       color: #00adf1;
     }
 
-    
-
-    @media screen and (max-width: 1080px) {
+    @media screen and (max-width: 768px) {
       body {
-        gap: 20px;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        gap: 25px;
       }
+
       .Login-Form {
-        width: 60%;
-        height: 90vh;
+        width: 55%;
+        height: 70%;
+        padding: 0%;
         display: flex;
         flex-direction: column;
         justify-content: center;
-      }
-      
-      .passwords {
-        width: 100%;
-      }
-    }
-    
-    @media screen and (max-width: 768px) {
-      .Login-Form {
-        width: 80%;
-        height: 60vh;
-      }
-      
-      .passwords {
-        height: 10%;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-      }
-    }
-
-    @media screen and (max-width: 720px) {
-      .Login-Form {
-        width: 90%;
-        height: 60vh;
-      }
-      
-      .passwords {
-        width: 100%;
-      }
-    }
-    
-    @media screen and (max-width: 390px) {
-      .Login-Form {
-        width: 90%;
-        height: 60vh;
+        padding: 30px;
       }
 
-      .passwords {
-        height: 10%;
-        width: 75vw;
+      .Login-Form label {
+        width: 100px;
+        height: 20px;
         display: flex;
-        justify-content: space-between;
+        align-items: center;
+    }
+
+    .passwords {
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    }
+
+    @media screen and (max-width: 320px) {
+      body {
+        width: 100%;
+        height: 100vh;
       }
+
+      .Login-Form {
+        width: 90%;
+      }
+
+      /* .Login-Form label {
+        width: 100px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+    } */
+
+    .passwords {
+      width: 100%;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .passwords span {
+      font-size: 9px;
+    }
     }
   </style>
 
