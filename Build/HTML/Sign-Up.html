@@ -6,216 +6,355 @@
     <script src="../JS/Sign-Up.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
+
   <style>
-    /* * {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: Arial, Helvetica, sans-serif;
-    } */
-
-    body {
-      width: 97%;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: max-content;
     }
 
-    h1 {
-      text-align: center;
+    body {
+      width: 100%;
+      height: max-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+    }
+    
+    .headling {
+      width: 35%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     form {
-      width: 40%;
-      background-color: #fff;
-      padding: 40px;
-      border-radius: 8px;
+      width: 30%;
+      height: max-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.26);
+      border-radius: 10px;
     }
 
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 15px;
-    }
-
-    input {
-      width: 100%;
+    .Fields {
+      width: 90%;
+      height: 12vh;
+      display: flex;
+      flex-direction: column;
       padding: 10px;
-      margin-bottom: 16px;
-      box-sizing: border-box;
-      border-radius: 7px;
-      outline: none;
-      border: 1px solid gray;
-      transition: border-color 0.9s ease-in-out;
+      gap: 3px;
     }
 
-    input:focus {
-      border: 1px solid #00adf1;
+    .Fields label {
+      color: #000;
     }
 
-    button {
-      background-color: #00adf1;
-      color: #fff;
+    .Fields input {
       width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 7px;
-      cursor: pointer;
-      color: white;
-      font-size: 18px;
+      height: 120px;
+      border: 1px solid #00adf1;
+      outline: none;
+      border-radius: 6px;
+      padding-left: 10px;
     }
 
-    button:hover {
-      background-color: #19b9f8;
+    .Fields input:focus {
+      outline: #03131a;
+    }
+
+    .ShowPassword {
+      width: 85%;
+      height: 3%;
+      display: flex;
+      align-items: center;
+      color: #00adf1;
+      cursor: pointer;
+    }
+
+    .ShowPassword span:hover {
+      text-decoration: underline;
+      color: #1cb7f5;
+    }
+
+    .Button {
+      width: 100%;
+      height: 9vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .Button button {
+      width: 87%;
+      height: 78%;
+      background-color: #00adf1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: ease-in-out 1s;
+    }
+
+    .Button button:hover {
+      background-color: #1cb7f5;
+      color: #f2f2f2;
+    }
+
+    .loginOption {
+      width: 30%;
+      height: 5vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .loginOption a {
+      text-decoration: none;
+      color: #00adf1;
+    }
+
+    .loginOption a:hover {
+      text-decoration: underline;
+      color: #1cb7f5;
     }
 
     .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 
-    .modal-content {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    width: 30%;
+    height: 10%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
 
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
+  }
 
-    #modalMessage {
-      color: red;
-    }
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
-    p a {
-      color: #00adf1;
-      text-decoration: none;
-    }
+  #modalMessage {
+    color: #1cb7f5;
+    text-align: center;
+  }
 
-    p a:hover {
-      color: #19b9f8;
-    }
+  p a {
+    color: #00adf1;
+    text-decoration: none;
+  }
 
-    #showPasswordBtn {
-      cursor: pointer;
-      color: #00adf1;
-      font-size: 14px;
-      text-decoration: underline;
-      padding-bottom: 10%;
-    }
+  p a:hover {
+    color: #19b9f8;
+  }
 
-    @media screen and (max-width: 1284px) {
-      /* * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    } */
-
-      body {
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      form {
-        height: 95vh;
-        width: 80%;
-      padding: 50px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.26);
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 16px;
-      box-sizing: border-box;
-      border-radius: 7px;
-      outline: none;
-      border: 1px solid gray;
-      transition: border-color 0.9s ease-in-out;
-    }
-    }
-
-    @media screen and (max-width: 768px) {
-      * {
+  @media only screen and (max-width: 1268px) {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: Arial, Helvetica, sans-serif;
     }
 
-      body {
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 25px;
-        padding: 10px;
-      }
-
-      form {
-        width: 75%;
-        height: 90vh;
-        /* background-color: blue; */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
+    body {
+      width: 100%;
+      height: max-content;
     }
 
-    @media screen and (max-width: 390px) {
-      body {
-        width: 97%;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    .headling {
+      width: 85%;
+      height: 40px;
+      font-size: 18px;
+    }
+
+    form {
+      width: 50%;
       height: max-content;
       padding: 10px;
-      }
-
-      form {
-        width: 95%;
-      }
     }
+
+    .Fields label {
+      font-size: 25px;
+    }
+
+    .Fields input {
+      height: 70px;
+      font-size: 17px;
+    }
+
+    .ShowPassword {
+      font-size: 27px;
+    }
+
+    .Button button {
+      font-size: 25px;
+    }
+
+    .loginOption {
+      width: 50%;
+      font-size: 30px;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    form {
+      width: 75%;
+    }
+
+    .Fields input {
+      height: 70px;
+      font-size: 25px;
+    }
+
+    .loginOption {
+      width: 75%;
+    }
+  }
+
+  @media only screen and (max-width: 426px) {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .headling {
+      width: 90%;
+      font-size: 12px;
+    }
+
+    form {
+      width: 95%;
+    }
+
+    .Fields label {
+      font-size: 20px;
+    }
+
+    .Fields input {
+      font-size: 18px;
+    }
+
+    .ShowPassword {
+      font-size: 20px;
+    }
+
+    .Button button {
+      font-size: 18px;
+    }
+
+    .loginOption {
+      width: 95%;
+      font-size: 20px;
+    }
+  }
   </style>
 
-
   <body>
-    <h1>Get Started with Equity Bank</h1>
+    <div class="headling">
+      <h1>Get Started with Equity Bank</h1>
+    </div>
     <form id="signupForm" onsubmit="validateForm(event)" action="">
+      <div class="Fields">
+        <label for="fullName">Full Name:</label>
+        <input placeholder="Full Name" type="text" id="fullName" name="fullName" />
+      </div>
+      <div class="Fields">
+        <label for="motherMaidenName">Mother's Maiden Name:</label>
+      <input placeholder="Mother Maiden's Name" type="text" id="motherMaidenName" name="motherMaidenName" />
+      </div>
+      <div class="Fields">
+        <label for="email">Email:</label>
+      <input placeholder="Enter Your Email" type="text" id="email" name="email" />
+      </div>
+      <div class="Fields">
+        <label for="address">Address:</label>
+      <input placeholder="Address" type="text" id="address" name="address" />
+      </div>
+      <div class="Fields">
+        <label for="mobileNumber">Mobile Number:</label>
+      <input placeholder="Mobile Number" type="text" id="mobileNumber" name="mobileNumber" />
+      </div>
+      <div class="Fields">
+        <label for="password">Password:</label>
+      <input placeholder="Enter Your Password" type="password" id="password" name="password" />
+      </div>
+      <div class="ShowPassword">
+        <span id="showPasswordBtn" onclick="togglePasswordVisibility()"
+        >Show Password</span
+      >
+      </div>
+      <div class="Fields">
+        <label for="zipCode">Zip Code:</label>
+      <input placeholder="Zip Code" type="text" id="zipCode" name="zipCode" />
+      </div>
+      <div class="Fields">
+        <label for="SocialSecurityNumber">Social Security Number:</label>
+      <input
+        placeholder="Social Security Number"
+        type="text"
+        id="SocialSecurityNumber"
+        name="SocialSecurityNumber"
+      />
+      </div>
+      <div class="Button">
+        <button type="submit">Sign Up</button>
+      </div>
+    </form>
+    <div class="loginOption">
+      <p>Already have an account?</p>
+      <a href="Login-Page.html">Login</a>
+    </div>
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <p id="modalMessage"></p>
+      <p id="errorDisplay"></p>
+    </div>
+  </div>
+    <!-- <h1>Get Started with Equity Bank</h1>
+    <form class="SignUpForm" id="signupForm" onsubmit="validateForm(event)" action="">
       <label for="fullName">Full Name:</label>
       <input type="text" id="fullName" name="fullName" />
 
@@ -257,7 +396,7 @@
         <p id="modalMessage"></p>
         <p id="errorDisplay"></p>
       </div>
-    </div>
+    </div>-->
   </body>
   <script>
     const togglePasswordVisibility = () => {
@@ -349,9 +488,9 @@
       };
 
       const isValidSocialSecurityNumber = (SocialSecurityNumber) => {
-    const ssnRegex = /^\d{9}$/;
-    return ssnRegex.test(SocialSecurityNumber);
-};
+        const ssnRegex = /^\d{9}$/;
+        return ssnRegex.test(SocialSecurityNumber);
+      };
 
       console.log(isValidFullName(fullName));
       console.log(isValidEmail(email));
@@ -481,3 +620,145 @@
     };
   </script>
 </html>
+
+<!-- <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  body {
+    width: 97%;
+    background-color: red;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: max-content;
+    gap: 20px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  form {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.26);
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid gray;
+    transition: border-color 0.9s ease-in-out;
+  }
+
+  input:focus {
+    border: 1px solid #00adf1;
+  }
+
+  button {
+    background-color: #00adf1;
+    color: #fff;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+  }
+
+  button:hover {
+    background-color: #19b9f8;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #modalMessage {
+    color: red;
+  }
+
+  p a {
+    color: #00adf1;
+    text-decoration: none;
+  }
+
+  p a:hover {
+    color: #19b9f8;
+  }
+
+  #showPasswordBtn {
+    cursor: pointer;
+    color: #00adf1;
+    font-size: 14px;
+    text-decoration: underline;
+    padding-bottom: 10%;
+  }
+</style>
+
+<style>
+  @media screen and (max-width: 768px) {
+    body {
+      background-color: pink;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .SignUpForm {
+      width: 100%;
+      height: 100%;
+      background-color: blue;
+    }
+  }
+</style> -->
