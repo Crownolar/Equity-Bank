@@ -84,10 +84,10 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: #ffffff;
+        background-color: #0e0d0db1;
         border: 1px solid #ccc;
-        padding: 20px;
-        /* max-width: 400px; */
+        /* padding: 20px; */
+        /* max-width: 800px; */
         z-index: 1002;
         flex-direction: column;
         align-items: center;
@@ -96,19 +96,20 @@
       }
 
       .popup-message p {
-        width: 30%;
-        height: 50%;
+        width: 50%;
+        height: 30%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
-        text-align: center;
+        text-align:justify;
         margin-bottom: 15px;
         font-size: 20px;
+        color: white;
       }
 
       .popup-message button {
-        width: 20%;
+        width: 10%;
         height: 9%;
         background-color: #3498db;
         color: #fff;
@@ -120,6 +121,47 @@
       }
 
       .popup-message button:hover {
+        background-color: #1e87d6;
+      }
+
+      .popup-message1 {
+        width: 100%;
+        height: 100%;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #0e0d0db1;
+        border: 1px solid #ccc;
+        /* padding: 20px; */
+        z-index: 1002;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-top: 35%;
+      }
+
+      .popup-message1 p {
+        margin-bottom: 15px;
+        font-size: 20px;
+        color: #fff;
+      }
+
+      .popup-message1 button {
+        width: 8%;
+        height: 8%;
+        background-color: #3498db;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .popup-message1 button:hover {
         background-color: #1e87d6;
       }
 
@@ -140,6 +182,49 @@
         }
       }
 
+      @media screen and (max-width: 375px) {
+        .popup-message1 {
+          display: none;
+          gap: none;
+          align-items: center;
+          padding-top: 70%;
+        }
+
+        .popup-message1 button {
+          width: 30%;
+          height: 9%;
+          background-color: #3498db;
+          color: #fff;
+        }
+
+        .popup-message1 button:hover {
+          background-color: #1e87d6;
+        }
+
+        .popup-message {
+          width: 100%;
+          height: 100%;
+          gap: 5%;
+        }
+
+        .popup-message p {
+          font-size: 15px;
+          width: 70%;
+          height: 50%;
+          text-align: left;
+          line-height: 20px;
+        }
+
+        .popup-message a {
+          text-decoration: none;
+          color: #00adf1;
+        }
+
+        .popup-message button {
+          width: 90px;
+          margin-top: 10px;
+        }
+      }
     </style>
     <title>Fund Transfer</title>
   </head>
@@ -150,22 +235,41 @@
 
       <form>
         <div class="currency-input">
-          <input type="text" placeholder="Beneficiary Account Number" />
+          <input
+            type="text"
+            placeholder="Beneficiary Account Number"
+            id="accountNumber"
+          />
         </div>
 
         <div class="currency-input">
-          <input type="text" placeholder="$ Amount to transfer" />
+          <input
+            type="text"
+            placeholder="$ Amount to transfer"
+            id="transferAmount"
+          />
           <span class="currency-symbol">$</span>
         </div>
 
-        <input type="text" placeholder="Bank Name" />
-        <input type="text" placeholder="Full Name on Beneficiary Account" />
-        <input type="text" placeholder="Routing Number" />
-        <input type="text" placeholder="Bank Address" />
+        <input type="text" placeholder="Bank Name" id="bankName" />
+        <input
+          type="text"
+          placeholder="Full Name on Beneficiary Account"
+          id="fullName"
+        />
+        <input type="text" placeholder="Routing Number" id="routingNumber" />
+        <input type="text" placeholder="Bank Address" id="bankAddress" />
 
-        <button type="button" onclick="displayPopup()">Proceed</button>
+        <button type="button" onclick="validateForm()">Proceed</button>
       </form>
-      <span class="go" onclick="controlBackNav()" >Go back to your dashboard</span>
+      <span class="go" onclick="controlBackNav()"
+        >Go back to your dashboard</span
+      >
+    </div>
+
+    <div class="popup-message1" id="validationPopup">
+      <p id="modalMessage"></p>
+      <button onclick="closeValidationPopup()">OK</button>
     </div>
 
     <div class="popup-message" id="popupMessage">
@@ -184,7 +288,109 @@
 
   <script>
     const controlBackNav = () => {
-        window.location.href = "./Dashboard.html"
+      window.location.href = "./Dashboard.html";
+    };
+
+    function validateForm() {
+      const accountNumber = document.getElementById("accountNumber").value;
+      const transferAmount = document.getElementById("transferAmount").value;
+      const bankName = document.getElementById("bankName").value;
+      const fullName = document.getElementById("fullName").value;
+      const routingNumber = document.getElementById("routingNumber").value;
+      const bankAddress = document.getElementById("bankAddress").value;
+
+      if (!isValidAccountNumber(accountNumber)) {
+        displayValidationPopup(
+          "Invalid Beneficiary Account Number. Please enter a valid number.",
+          true
+        );
+        return false;
+      }
+
+      if (!isValidTransferAmount(transferAmount)) {
+        displayValidationPopup(
+          "Invalid Transfer Amount. Please enter a valid amount.",
+          true
+        );
+        return false;
+      }
+
+      if (!isValidBankName(bankName)) {
+        displayValidationPopup(
+          "Invalid Bank Name. Please enter a valid name.",
+          true
+        );
+        return false;
+      }
+
+      if (!isValidFullName(fullName)) {
+        displayValidationPopup(
+          "Invalid Full Name. Please enter a valid name.",
+          true
+        );
+        return false;
+      }
+
+      if (!isValidRoutingNumber(routingNumber)) {
+        displayValidationPopup(
+          "Invalid Routing Number. Please enter a valid number.",
+          true
+        );
+        return false;
+      }
+
+      if (!isValidBankAddress(bankAddress)) {
+        displayValidationPopup(
+          "Invalid Bank Address. Please enter a valid address.",
+          true
+        );
+        return false;
+      }
+
+      displayPopup();
+      return false;
+    }
+
+    function isValidAccountNumber(accountNumber) {
+      return /^[0-9]+$/.test(accountNumber);
+    }
+
+    function isValidTransferAmount(transferAmount) {
+      return transferAmount.trim() !== "";
+    }
+
+    function isValidBankName(bankName) {
+      return bankName.trim() !== "";
+    }
+
+    const isValidFullName = (fullName) => {
+      const fullNameRegex = /^[a-zA-Z\s]{3,}$/;
+      return fullNameRegex.test(fullName);
+    };
+
+    function isValidRoutingNumber(routingNumber) {
+      return /^[0-9]+$/.test(routingNumber);
+    }
+
+    const isValidBankAddress = (address) => {
+      return address.trim() !== "";
+    };
+    function displayValidationPopup(message, isError = false) {
+      const validationPopup = document.getElementById("validationPopup");
+      validationPopup.style.display = "flex";
+
+      validationPopup.style.display = "block";
+      modalMessage.textContent = message;
+    }
+
+    const displayModal = (message, isError = false) => {
+      const modal = document.getElementById("myModal");
+      const modalMessage = document.getElementById("modalMessage");
+    };
+
+    function closeValidationPopup() {
+      const validationPopup = document.getElementById("validationPopup");
+      validationPopup.style.display = "none";
     }
 
     function displayPopup() {

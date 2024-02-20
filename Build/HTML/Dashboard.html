@@ -40,7 +40,7 @@
       }
 
       .DashboardLogo {
-        width: 150px;
+        width: 100px;
         height: 100%;
         display: flex;
         align-items: center;
@@ -749,15 +749,21 @@ if (lastChildSpan) {
     dateNumDiv.innerHTML = "";
 
     for (let i = 0; i < recentTransactions.length; i++) {
-        const transaction = recentTransactions[i];
-        const creditSpan = `<span>${transaction.status}</span>`;
-        const amountSpan = `<span>$${transaction.amount.toFixed(2)}</span>`;
-        const dateSpan = `<span>${transaction.updatedAt}</span>`;
+  const transaction = recentTransactions[i];
+  const creditSpan = `<span>${transaction.status}</span>`;
 
-        creditDiv.innerHTML += creditSpan;
-        amountNumContainer.innerHTML += amountSpan;
-        dateNumDiv.innerHTML += dateSpan;
-      }
+  const formattedAmount = transaction.amount.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const amountSpan = `<span>$${formattedAmount}</span>`;
+
+  const dateSpan = `<span>${transaction.updatedAt}</span>`;
+
+  creditDiv.innerHTML += creditSpan;
+  amountNumContainer.innerHTML += amountSpan;
+  dateNumDiv.innerHTML += dateSpan;
+}
     } else {
     creditDiv.innerHTML = "<span></span><span></span><span></span>";
     amountNumContainer.innerHTML = "<span>No Transaction history</span><span></span><span></span>";
